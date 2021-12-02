@@ -20,13 +20,13 @@
     </table>
 </#macro>
 
-<#macro card note>
+<#macro card task>
     <div class="card" style="width: 18rem;">
         <div class="card-body">
-            <h5 class="card-title">${note.title}</h5>
-            <p class="card-text">${note.body}</p>
-            <p class="card-text"><@spring.message 'my-notes.endDate'/> ${note.endDate}</p>
-            <a href="/my-notes/resolve?id=${note.id}"><@spring.message 'my-notes.resolve'/> </a>
+            <h5 class="card-title">${task.title}</h5>
+            <p class="card-text">${task.body}</p>
+            <p class="card-text"><@spring.message 'my-tasks.endDate'/> ${task.endDate}</p>
+            <a href="/my-tasks/resolve?id=${task.id}"><@spring.message 'my-tasks.resolve'/> </a>
         </div>
     </div>
 </#macro>

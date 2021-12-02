@@ -31,6 +31,7 @@
                         Tasks
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="/new-task"><@spring.message 'navbar.new-task'/></a>
                         <a class="dropdown-item" href="/my-tasks"><@spring.message 'navbar.my-tasks'/></a>
                         <a class="dropdown-item" href="/task-board"><@spring.message 'navbar.task-board'/></a>
                     </div>
