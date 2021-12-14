@@ -57,9 +57,18 @@ public class RootController {
   public String myTasks(Model model,@CookieValue("authUser") String authUser) {
     UserEntity user = userService.findByNickname(authUser);
     model.addAttribute("currentUser", user.getNickname());
-    List<TaskEntity> tasksOfUser = taskService.getActiveTasksOfUser(user);
+    List<TaskEntity> tasksOfUser = taskService.getMyTasksOfUser(user);
     model.addAttribute("tasks",mapperFacade.mapAsList(tasksOfUser, TaskDto.class));
     return "my-tasks";
+  }
+
+  @GetMapping("/task-board")
+  public String tasksBoard(Model model,@CookieValue("authUser") String authUser) {
+    UserEntity user = userService.findByNickname(authUser);
+    model.addAttribute("currentUser", user.getNickname());
+    List<TaskEntity> tasks = taskService.getAllTasks();
+    model.addAttribute("tasks",mapperFacade.mapAsList(tasks,TaskDto.class));
+    return "task-board";
   }
 
 }

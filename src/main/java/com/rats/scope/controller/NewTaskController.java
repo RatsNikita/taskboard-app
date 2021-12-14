@@ -4,7 +4,6 @@ package com.rats.scope.controller;
 import com.rats.scope.entity.TaskEntity;
 import com.rats.scope.entity.UserEntity;
 import com.rats.scope.entity.dto.TaskDto;
-import com.rats.scope.repository.TaskRepository;
 import com.rats.scope.service.TaskService;
 import com.rats.scope.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +36,7 @@ public class NewTaskController {
     taskEntity.getUserEntityList().add(user);
     taskService.save(taskEntity);
     model.addAttribute("currentUser", user.getNickname());
-    List<TaskEntity> tasksOfUser = taskService.getActiveTasksOfUser(user);
+    List<TaskEntity> tasksOfUser = taskService.getMyTasksOfUser(user);
     model.addAttribute("tasks", mapperFacade.mapAsList(tasksOfUser,TaskDto.class));
     return "my-tasks";
   }

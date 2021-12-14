@@ -32,7 +32,7 @@ public class MyTasksController {
     taskService.deactivate(id);
     model.addAttribute("currentUser", authUser);
     UserEntity user = userService.findByNickname(authUser);
-    List<TaskEntity> tasksOfUser = taskService.getActiveTasksOfUser(user);
+    List<TaskEntity> tasksOfUser = taskService.getMyTasksOfUser(user);
     model.addAttribute("tasks", mapperFacade.mapAsList(tasksOfUser, TaskDto.class));
     return "my-tasks";
   }

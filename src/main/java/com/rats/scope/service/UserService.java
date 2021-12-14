@@ -5,7 +5,6 @@ import com.rats.scope.entity.dto.AuthRequest;
 import com.rats.scope.exception.RequestException;
 import com.rats.scope.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

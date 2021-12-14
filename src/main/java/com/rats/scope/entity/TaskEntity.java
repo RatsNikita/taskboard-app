@@ -29,5 +29,5 @@ public class TaskEntity {
   private String customer;
   private OffsetDateTime creationDate;
   private OffsetDateTime updateDate;
-  private Boolean isActive;
+  private TaskStatus status;
 }

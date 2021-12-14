@@ -20,16 +20,43 @@
     </table>
 </#macro>
 
+<#macro mycard task>
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">${task.title}</h5>
+            <p class="card-text">${task.body}</p>
+            <p class="card-text">${task.customer}</p>
+            <p class="card-text"><@spring.message 'my-tasks.endDate'/> ${task.endDate}</p>
+
+        </div>
+    </div>
+</#macro>
+
 <#macro card task>
     <div class="card" style="width: 18rem;">
         <div class="card-body">
             <h5 class="card-title">${task.title}</h5>
             <p class="card-text">${task.body}</p>
+            <p class="card-text">${task.customer}</p>
+            <p class="card-text"><@spring.message 'my-tasks.endDate'/> ${task.endDate}</p>
+            <a href="/task-board/start?id=${task.id}"><@spring.message 'task-board.start'/> </a>
+        </div>
+    </div>
+</#macro>
+
+<#macro inprogress task>
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">${task.title}</h5>
+            <p class="card-text">${task.body}</p>
+            <p class="card-text">${task.customer}</p>
             <p class="card-text"><@spring.message 'my-tasks.endDate'/> ${task.endDate}</p>
             <a href="/my-tasks/resolve?id=${task.id}"><@spring.message 'my-tasks.resolve'/> </a>
         </div>
     </div>
 </#macro>
+
+
 
 <#function message code text=''>
     <#if text != ''>
