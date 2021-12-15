@@ -25,8 +25,6 @@
         <@ui.formInput id="f1i1" name="title" localizedLabel="new-task.title"/>
       <label for="f1i2"><@spring.message 'new-task.body'/></label>
       <textarea id="f1i2" name="body" cols="60" rows="5"></textarea> <br/>
-      <label for="f1i2"><@spring.message 'new-task.customer'/></label>
-      <textarea id="f1i2" name="customer" cols="60" rows="5"></textarea> <br/>
         <@ui.formInput id="f1i3" name="endDate" localizedLabel="new-task.end-date" type="date"/>
       <button formaction="/new-task/save" formmethod="post" type="submit" class="btn btn-primary"><@spring.message 'new-task.save'/></button>
     </form>

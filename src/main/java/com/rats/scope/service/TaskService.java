@@ -19,10 +19,19 @@ public class TaskService {
 
   private final TaskRepository taskRepository;
 
-  public TaskEntity save(TaskEntity task) {
+  public TaskEntity save(TaskEntity task, UserEntity user) {
     task.setStatus(TaskStatus.ACTIVE);
     task.setCreationDate(OffsetDateTime.now());
+    task.setCustomer(user.getNickname());
     return taskRepository.save(task);
+  }
+
+  public void startTask(UserEntity user, Long id) {
+    TaskEntity taskEntity = taskRepository.findById(id)
+            .orElseThrow(() -> new RequestException("Не существует записи с ID = " + id));
+    taskEntity.setExecutor(user.getNickname());
+    taskEntity.setStatus(TaskStatus.IN_PROGRESS);
+    taskRepository.saveAndFlush(taskEntity);
   }
 
   public List<TaskEntity> getMyTasksOfUser(UserEntity user) {
@@ -32,19 +41,18 @@ public class TaskService {
   }
 
   public List<TaskEntity> getInProgressTasksOfUser(UserEntity user) {
-    return taskRepository.findByUserId(user.getId()).stream()
-            .filter(TaskEntity -> TaskEntity.getStatus().equals(TaskStatus.IN_PROGRESS))
-            .collect(Collectors.toList());
+    return new ArrayList<>(taskRepository.findByExecutor(user.getNickname()));
   }
 
   public List<TaskEntity> getAllTasks() {
     return new ArrayList<>(taskRepository.findAll());
   }
 
-  public void deactivate(Long id) {
+  public void changeStatus(Long id,TaskStatus status) {
     TaskEntity taskEntity = taskRepository.findById(id)
             .orElseThrow(() -> new RequestException("Не существует записи с ID = " + id));
-    taskEntity.setStatus(TaskStatus.DEACTIVATED);
+    taskEntity.setStatus(status);
+    taskEntity.setUpdateDate(OffsetDateTime.now());
     taskRepository.saveAndFlush(taskEntity);
   }
 

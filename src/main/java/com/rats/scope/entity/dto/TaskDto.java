@@ -1,5 +1,6 @@
 package com.rats.scope.entity.dto;
 
+import com.rats.scope.entity.TaskStatus;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -17,8 +18,12 @@ public class TaskDto {
   private String title;
   private String body;
   private String customer;
+  private TaskStatus status;
+  private String executor;
   @DateTimeFormat(pattern = "yyyy-MM-dd")
   private LocalDate endDate;
+  @DateTimeFormat(pattern = "yyyy-MM-dd")
   private OffsetDateTime creationDate;
+  @DateTimeFormat(pattern = "yyyy-MM-dd")
   private OffsetDateTime updateDate;
 }

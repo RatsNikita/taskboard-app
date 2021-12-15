@@ -27,6 +27,7 @@ public class TaskEntity {
   private String body;
   private LocalDate endDate;
   private String customer;
+  private String executor;
   private OffsetDateTime creationDate;
   private OffsetDateTime updateDate;
   private TaskStatus status;

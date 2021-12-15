@@ -1,6 +1,5 @@
 package com.rats.scope.controller;
 
-
 import com.rats.scope.entity.TaskEntity;
 import com.rats.scope.entity.TaskStatus;
 import com.rats.scope.entity.UserEntity;
@@ -19,8 +18,8 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/my-tasks")
-public class MyTasksController {
+@RequestMapping("/in-progress-tasks")
+public class InProgressTasksController {
 
   private final UserService userService;
 
@@ -28,9 +27,9 @@ public class MyTasksController {
 
   private final MapperFacade mapperFacade;
 
-  @RequestMapping("/delete")
+  @RequestMapping("/resolve")
   public String resolve(Model model, @PathParam("id") Long id, @CookieValue(name = "authUser") String authUser) {
-    taskService.changeStatus(id, TaskStatus.DEACTIVATED);
+    taskService.changeStatus(id, TaskStatus.RESOLVED);
     model.addAttribute("currentUser", authUser);
     UserEntity user = userService.findByNickname(authUser);
     List<TaskEntity> tasksOfUser = taskService.getMyTasksOfUser(user);

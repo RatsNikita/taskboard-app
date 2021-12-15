@@ -25,9 +25,9 @@
         <div class="card-body">
             <h5 class="card-title">${task.title}</h5>
             <p class="card-text">${task.body}</p>
-            <p class="card-text">${task.customer}</p>
+            <p class="card-text"><@spring.message 'task-board.status'/>${task.status}</p>
             <p class="card-text"><@spring.message 'my-tasks.endDate'/> ${task.endDate}</p>
-
+            <a href="/my-tasks/delete?id=${task.id}"><@spring.message 'my-tasks.delete'/> </a>
         </div>
     </div>
 </#macro>
@@ -37,9 +37,15 @@
         <div class="card-body">
             <h5 class="card-title">${task.title}</h5>
             <p class="card-text">${task.body}</p>
-            <p class="card-text">${task.customer}</p>
+            <p class="card-text"><@spring.message 'task-board.customer'/>${task.customer}</p>
+            <p class="card-text"><@spring.message 'task-board.status'/>${task.status}</p>
             <p class="card-text"><@spring.message 'my-tasks.endDate'/> ${task.endDate}</p>
-            <a href="/task-board/start?id=${task.id}"><@spring.message 'task-board.start'/> </a>
+            <#if task.status =="ACTIVE">
+                <a href="/task-board/start?id=${task.id}"><@spring.message 'task-board.start'/> </a>
+            </#if>
+            <#if task.status =="DEACTIVATED"|| task.status == "RESOLVED">
+                <p class="card-text"> <@spring.message "task-board.closingDate"/> ${task.updateDate}</p>
+            </#if>
         </div>
     </div>
 </#macro>
@@ -49,9 +55,9 @@
         <div class="card-body">
             <h5 class="card-title">${task.title}</h5>
             <p class="card-text">${task.body}</p>
-            <p class="card-text">${task.customer}</p>
+            <p class="card-text"><@spring.message 'task-board.customer'/>${task.customer}</p>
             <p class="card-text"><@spring.message 'my-tasks.endDate'/> ${task.endDate}</p>
-            <a href="/my-tasks/resolve?id=${task.id}"><@spring.message 'my-tasks.resolve'/> </a>
+            <a href="/in-progress-tasks/resolve?id=${task.id}"><@spring.message 'in-progress-tasks.resolve'/> </a>
         </div>
     </div>
 </#macro>

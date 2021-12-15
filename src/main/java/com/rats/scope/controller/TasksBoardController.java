@@ -1,8 +1,6 @@
 package com.rats.scope.controller;
 
-
 import com.rats.scope.entity.TaskEntity;
-import com.rats.scope.entity.TaskStatus;
 import com.rats.scope.entity.UserEntity;
 import com.rats.scope.entity.dto.TaskDto;
 import com.rats.scope.service.TaskService;
@@ -18,9 +16,9 @@ import javax.websocket.server.PathParam;
 import java.util.List;
 
 @Controller
+@RequestMapping("/task-board")
 @RequiredArgsConstructor
-@RequestMapping("/my-tasks")
-public class MyTasksController {
+public class TasksBoardController {
 
   private final UserService userService;
 
@@ -28,13 +26,15 @@ public class MyTasksController {
 
   private final MapperFacade mapperFacade;
 
-  @RequestMapping("/delete")
-  public String resolve(Model model, @PathParam("id") Long id, @CookieValue(name = "authUser") String authUser) {
-    taskService.changeStatus(id, TaskStatus.DEACTIVATED);
+  @RequestMapping("/start")
+  public String start(Model model, @PathParam("id") Long id, @CookieValue(name = "authUser") String authUser) {
     model.addAttribute("currentUser", authUser);
     UserEntity user = userService.findByNickname(authUser);
-    List<TaskEntity> tasksOfUser = taskService.getMyTasksOfUser(user);
+    taskService.startTask(user,id);
+    List<TaskEntity> tasksOfUser = taskService.getInProgressTasksOfUser(user);
     model.addAttribute("tasks", mapperFacade.mapAsList(tasksOfUser, TaskDto.class));
-    return "my-tasks";
+    return "in-progress-tasks";
   }
+
 }
+

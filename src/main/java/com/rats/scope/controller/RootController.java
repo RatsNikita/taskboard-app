@@ -47,6 +47,7 @@ public class RootController {
     model.addAttribute("currentUser",authUser);
     return "main";
   }
+
   @GetMapping("/new-task")
   public String newTask(Model model,@CookieValue("authUser") String authUser) {
     model.addAttribute("currentUser",authUser);
@@ -69,6 +70,15 @@ public class RootController {
     List<TaskEntity> tasks = taskService.getAllTasks();
     model.addAttribute("tasks",mapperFacade.mapAsList(tasks,TaskDto.class));
     return "task-board";
+  }
+
+  @GetMapping("/in-progress-tasks")
+  public String inProgressTasks(Model model,@CookieValue("authUser") String authUser) {
+    UserEntity user = userService.findByNickname(authUser);
+    model.addAttribute("currentUser", user.getNickname());
+    List<TaskEntity> tasks = taskService.getInProgressTasksOfUser(user);
+    model.addAttribute("tasks",mapperFacade.mapAsList(tasks,TaskDto.class));
+    return "in-progress-tasks";
   }
 
 }

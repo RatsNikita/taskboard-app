@@ -34,7 +34,7 @@ public class NewTaskController {
     UserEntity user = userService.findByNickname(authUser.getValue());
     TaskEntity taskEntity =  mapperFacade.map(task, TaskEntity.class);
     taskEntity.getUserEntityList().add(user);
-    taskService.save(taskEntity);
+    taskService.save(taskEntity,user);
     model.addAttribute("currentUser", user.getNickname());
     List<TaskEntity> tasksOfUser = taskService.getMyTasksOfUser(user);
     model.addAttribute("tasks", mapperFacade.mapAsList(tasksOfUser,TaskDto.class));
