@@ -15,4 +15,5 @@ public interface TaskRepository extends JpaRepository<TaskEntity,Long> {
   List<TaskEntity> findByUserId(Long id);
 
   List<TaskEntity> findByExecutor(String executor);
+  List<TaskEntity> findAllByOrderByUpdateDateDesc();
 }

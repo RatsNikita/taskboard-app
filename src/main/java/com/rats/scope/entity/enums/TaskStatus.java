@@ -1,4 +1,4 @@
-package com.rats.scope.entity;
+package com.rats.scope.entity.enums;
 
 public enum TaskStatus {
   ACTIVE,

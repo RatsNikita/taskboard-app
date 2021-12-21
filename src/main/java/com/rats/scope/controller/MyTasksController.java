@@ -2,7 +2,7 @@ package com.rats.scope.controller;
 
 
 import com.rats.scope.entity.TaskEntity;
-import com.rats.scope.entity.TaskStatus;
+import com.rats.scope.entity.enums.TaskStatus;
 import com.rats.scope.entity.UserEntity;
 import com.rats.scope.entity.dto.TaskDto;
 import com.rats.scope.service.TaskService;

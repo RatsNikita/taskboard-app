@@ -1,6 +1,8 @@
 package com.rats.scope.exception;
 
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
+import org.hibernate.exception.DataException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.MissingRequestCookieException;
@@ -51,6 +53,7 @@ public class ExceptionHandlerController {
     model.addObject("error", "Непредвиденная ошибка:\n" + e.getLocalizedMessage());
     return model;
   }
+
 
 
   private String extractUri(HttpServletRequest request) {
