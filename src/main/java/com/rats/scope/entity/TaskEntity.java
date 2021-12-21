@@ -1,10 +1,14 @@
 package com.rats.scope.entity;
 
+import com.rats.scope.entity.enums.TaskDifficulty;
+import com.rats.scope.entity.enums.TaskPriority;
+import com.rats.scope.entity.enums.TaskStatus;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +32,10 @@ public class TaskEntity {
   private LocalDate endDate;
   private String customer;
   private String executor;
-  private OffsetDateTime creationDate;
-  private OffsetDateTime updateDate;
+  private LocalDateTime creationDate;
+  @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+  private LocalDateTime updateDate;
   private TaskStatus status;
+  private TaskDifficulty difficulty;
+  private TaskPriority priority;
 }

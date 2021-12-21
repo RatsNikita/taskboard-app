@@ -18,19 +18,29 @@
 
 <div class="container">
   <div class="col">
-
   </div>
   <div class="d-flex flex-column">
     <form id="f1" name="saveTask" class="d-flex flex-column">
         <@ui.formInput id="f1i1" name="title" localizedLabel="new-task.title"/>
       <label for="f1i2"><@spring.message 'new-task.body'/></label>
-      <textarea id="f1i2" name="body" cols="60" rows="5"></textarea> <br/>
-        <@ui.formInput id="f1i3" name="endDate" localizedLabel="new-task.end-date" type="date"/>
+      <textarea id="f1i2" name="body" cols="60" rows="3" maxlength="255"></textarea> <br/>
+      <label for="endDate"><@spring.message 'new-task.end-date'/></label>
+      <input type="date" id="endDate" name="endDate"> <br/>
+      <label for="difficulty"><@spring.message 'new-task.difficulty'/> </label>
+      <select class="form-control" id="difficulty" name="difficulty">
+        <option>EASY</option>
+        <option>MEDIUM</option>
+        <option>HARD</option>
+      </select>
+      <label for="priority"><@spring.message 'new-task.priority'/> </label>
+      <select class="form-control" id="priority" name="priority">
+        <option>LOW</option>
+        <option>NORMAL</option>
+        <option>HIGH</option>
+      </select> <br/>
       <button formaction="/new-task/save" formmethod="post" type="submit" class="btn btn-primary"><@spring.message 'new-task.save'/></button>
     </form>
   </div>
-  <div class="col">
-
   </div>
 </div>
 </body>

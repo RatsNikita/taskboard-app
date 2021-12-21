@@ -1,11 +1,13 @@
 package com.rats.scope.entity.dto;
 
-import com.rats.scope.entity.TaskStatus;
+import com.rats.scope.entity.enums.TaskDifficulty;
+import com.rats.scope.entity.enums.TaskPriority;
+import com.rats.scope.entity.enums.TaskStatus;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,8 +24,10 @@ public class TaskDto {
   private String executor;
   @DateTimeFormat(pattern = "yyyy-MM-dd")
   private LocalDate endDate;
-  @DateTimeFormat(pattern = "yyyy-MM-dd")
-  private OffsetDateTime creationDate;
-  @DateTimeFormat(pattern = "yyyy-MM-dd")
-  private OffsetDateTime updateDate;
+  @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+  private LocalDateTime creationDate;
+  @DateTimeFormat()
+  private LocalDateTime updateDate;
+  private TaskDifficulty difficulty;
+  private TaskPriority priority;
 }

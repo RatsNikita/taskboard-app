@@ -14,8 +14,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">Scope</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Переключатель навигации">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -38,8 +37,9 @@
                     </div>
                 </li>
             </ul>
-            <p class="me-5"><@spring.message 'navbar.user'/> ${currentUser!"N/A"}</p>
-            <a class="btn btn-outline-success" href="/logout"><@spring.message 'navbar.logout'/></a>
+
+                <p class="me-5"><@spring.message 'navbar.user'/> ${currentUser!"N/A"}</p>
+                <a class="btn btn-outline-success" href="/logout"><@spring.message 'navbar.logout'/></a>
         </div>
     </div>
 </nav>
