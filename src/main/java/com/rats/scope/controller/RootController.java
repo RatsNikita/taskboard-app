@@ -81,4 +81,10 @@ public class RootController {
     return "in-progress-tasks";
   }
 
+  @GetMapping("/setting")
+  public String setting(Model model,@CookieValue("authUser") String authUser) {
+    model.addAttribute("currentUser",authUser);
+    return "setting";
+  }
+
 }

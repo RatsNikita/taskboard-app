@@ -4,6 +4,7 @@ package com.rats.scope.controller;
 import com.rats.scope.entity.TaskEntity;
 import com.rats.scope.entity.UserEntity;
 import com.rats.scope.entity.dto.TaskDto;
+import com.rats.scope.service.EmailService;
 import com.rats.scope.service.TaskService;
 import com.rats.scope.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,8 @@ public class NewTaskController {
 
   private final UserService userService;
 
+  private final EmailService emailService;
+
   @PostMapping("/save")
   public String saveTask(Model model, TaskDto task,
                          @CookieValue(name = "authUser") Cookie authUser) {
@@ -38,6 +41,7 @@ public class NewTaskController {
     model.addAttribute("currentUser", user.getNickname());
     List<TaskEntity> tasksOfUser = taskService.getMyTasksOfUser(user);
     model.addAttribute("tasks", mapperFacade.mapAsList(tasksOfUser,TaskDto.class));
+    emailService.sendSimpleMessage(user);
     return "my-tasks";
   }
 }

@@ -23,6 +23,9 @@ public class UserEntity {
           inverseJoinColumns = @JoinColumn(name = "task_id", referencedColumnName = "id"))
   private List<TaskEntity> taskEntityList = new ArrayList<>();
 
+  @Embedded
+  private SettingEntity settings = new SettingEntity();
+
   private String nickname;
   private String password;
   private String email;

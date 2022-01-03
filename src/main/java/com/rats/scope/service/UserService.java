@@ -5,6 +5,7 @@ import com.rats.scope.entity.dto.AuthRequest;
 import com.rats.scope.exception.RequestException;
 import com.rats.scope.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
+import ma.glasnost.orika.MapperFacade;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +15,8 @@ import java.util.List;
 public class UserService {
 
   private  final UsersRepository usersRepository;
+
+  private MapperFacade mapperFacade;
 
   public UserEntity save(UserEntity user) {
     return usersRepository.save(user);
@@ -33,5 +36,9 @@ public class UserService {
 
   public List<UserEntity> findAll() {
     return usersRepository.findAll();
+  }
+
+  public UserEntity updateSettingsOfUser(UserEntity user) {
+    return usersRepository.saveAndFlush(user);
   }
 }
