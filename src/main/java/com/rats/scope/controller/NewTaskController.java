@@ -41,7 +41,6 @@ public class NewTaskController {
     model.addAttribute("currentUser", user.getNickname());
     List<TaskEntity> tasksOfUser = taskService.getMyTasksOfUser(user);
     model.addAttribute("tasks", mapperFacade.mapAsList(tasksOfUser,TaskDto.class));
-    emailService.sendSimpleMessage(user);
     return "my-tasks";
   }
 }
