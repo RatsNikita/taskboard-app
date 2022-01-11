@@ -9,4 +9,6 @@ import javax.persistence.*;
 public class SettingEntity {
 
   private boolean mailing;
+
+  private String telegramId;
 }

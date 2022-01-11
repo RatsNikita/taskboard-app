@@ -41,4 +41,5 @@ public class UserService {
   public UserEntity updateSettingsOfUser(UserEntity user) {
     return usersRepository.saveAndFlush(user);
   }
+
 }

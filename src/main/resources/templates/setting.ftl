@@ -29,6 +29,8 @@
             OFF
         </label>
     </div>
+    <label for="f1i2"><@spring.message 'setting.telegramId'/></label>
+    <textarea id="f1i2" name="telegramId" cols="30" rows="1" maxlength="30"></textarea> <br/>
 <button formaction="/setting/accept" formmethod="post" type="submit" class="btn btn-primary"><@spring.message 'setting.save'/></button>
 </form>
 </div>

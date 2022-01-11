@@ -22,7 +22,7 @@ public class ScheduledTask {
 
   private final EmailService emailService;
 
-  @Scheduled(cron = "0 44 14 * * ?")
+  @Scheduled(cron = "0 0 6 * * ?")
   public void taskDeadlineNotice() {
     taskRepository.findAll().stream()
             .filter(taskEntity -> taskEntity.getStatus().equals(TaskStatus.IN_PROGRESS))

@@ -13,6 +13,8 @@ public class EmailService {
 
   private final JavaMailSender mailSender;
 
+  private final TelegramBot telegramBot;
+
   public void sendSimpleMessage(UserEntity user,String taskTitle) {
     if(user.getSettings().isMailing()) {
       SimpleMailMessage message = new SimpleMailMessage();
@@ -21,6 +23,9 @@ public class EmailService {
       message.setSubject("Скоро дедлайн");
       message.setText("У вас остался один день для решения задачи [" + taskTitle + "]. Поторопитесь!");
       mailSender.send(message);
+    }
+    if(user.getSettings().getTelegramId()!=null) {
+      telegramBot.notificationMessage(user.getSettings().getTelegramId(),taskTitle);
     }
   }
 }

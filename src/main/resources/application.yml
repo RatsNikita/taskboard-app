@@ -26,3 +26,6 @@ spring:
         smtp:
           auth: true
           starttls.enable: true
+bot:
+  name:
+  token:

@@ -7,4 +7,6 @@ public class SettingDto {
 
   private boolean mailing;
 
+  private String telegramId;
+
 }
