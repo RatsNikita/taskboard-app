@@ -5,43 +5,25 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.5.6</version>
+        <version>2.6.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.example</groupId>
-    <artifactId>TaskBoard</artifactId>
+    <groupId>com.rats</groupId>
+    <artifactId>taskboard-notification-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Scope</name>
-    <description>TaskBoard</description>
+    <name>taskboard-notification-service</name>
+    <description>taskboard-notification-service</description>
     <properties>
         <java.version>11</java.version>
     </properties>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-freemarker</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-validation</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -54,19 +36,19 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>ma.glasnost.orika</groupId>
-            <artifactId>orika-core</artifactId>
-            <version>1.5.4</version>
-        </dependency>
-        <dependency>
-            <groupId>net.rakugakibox.spring.boot</groupId>
-            <artifactId>orika-spring-boot-starter</artifactId>
-            <version>1.9.0</version>
-        </dependency>
-        <dependency>
             <groupId>com.github.xabgesagtx</groupId>
             <artifactId>telegram-spring-boot-starter</artifactId>
             <version>0.26</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+            <version>3.1.0</version>
         </dependency>
     </dependencies>
 
@@ -75,7 +57,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.6.2</version>
                 <configuration>
                     <excludes>
                         <exclude>

@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: taskboard-notification-service
+  mail:
+    host: smtp.gmail.com
+    port: 25
+    username:
+    password:
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls.enable: true
+bot:
+  name:
+  token:
+server:
+  port: 8081
+eureka:
+  client:
+    service-url:
+      default-zone: http://localhost:8761
+
