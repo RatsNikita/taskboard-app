@@ -15,8 +15,6 @@ import java.util.List;
 public class TaskDto {
 
   private Long id;
-  private List<UserDto> userList = new ArrayList<>();
-
   private String title;
   private String body;
   private String customer;

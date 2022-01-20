@@ -1,6 +1,7 @@
 
 spring:
   application:
+
     name: taskboard-service
   datasource:
     url: jdbc:postgresql://localhost:5432/scope

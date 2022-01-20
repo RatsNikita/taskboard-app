@@ -44,7 +44,7 @@
           <legend><@spring.message 'login.login'/></legend>
           <form id="authForm" name="authData">
             <div class="mb-3">
-                <@ui.formInput id="a4" name="login" localizedLabel="login.nickname"/>
+                <@ui.formInput id="a4" name="nickname" localizedLabel="login.nickname"/>
             </div>
             <div class="mb-3">
                 <@ui.formInput id="a5" name="password" localizedLabel="login.password" type="password"/>
@@ -76,6 +76,4 @@
     <div class="col-md-3"></div>
   </div>
 </div>
-<a href="${'?locale=en'}">EN</a>
-<a href="${'?locale=ru'}">RU</a>
 </body>

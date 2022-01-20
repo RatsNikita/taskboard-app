@@ -1,15 +1,13 @@
 package com.rats.taskboardservice.entity.dto;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
 
 @Data
 public class AuthRequest {
-  @JsonAlias("user")
   @NotEmpty
-  private String login;
+  private String nickname;
   @NotEmpty
   private String password;
 }

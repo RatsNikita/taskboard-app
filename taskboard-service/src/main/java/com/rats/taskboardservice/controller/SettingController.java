@@ -31,7 +31,7 @@ public class SettingController {
     UserEntity user =  userService.findByNickname(authUser.getValue());
     SettingEntity settings = mapperFacade.map(userSettings,SettingEntity.class);
     user.setSettings(settings);
-    userService.updateSettingsOfUser(user);
+    userService.updateSettingsOfUser(authUser.getValue(),settings);
     model.addAttribute("currentUser", user.getNickname());
     return "main";
   }

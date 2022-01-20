@@ -37,29 +37,5 @@
         <#else></#if>
     </div>
   </div>
-    <#if users??>
-      <div>
-        <table class="table">
-          <thead>
-          <tr>
-            <th scope="col">id</th>
-            <th scope="col">nickname</th>
-            <th scope="col">password</th>
-            <th scope="col">email</th>
-          </tr>
-          </thead>
-          <tbody>
-          <#list users as user>
-            <tr>
-              <td>${user.id}</td>
-              <td>${user.nickname}</td>
-              <td>${user.password}</td>
-              <td>${user.email}</td>
-            </tr>
-          </#list>
-          </tbody>
-        </table>
-      </div>
-    <#else></#if>
 </div>
 </body>

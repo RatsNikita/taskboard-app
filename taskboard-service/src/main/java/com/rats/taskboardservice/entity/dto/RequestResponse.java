@@ -6,11 +6,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class RequestResponse {
-  private String status;
   private String[] result;
 
-  public RequestResponse(String status,String... result) {
-    this.status=status;
+  public RequestResponse( String... result) {
     this.result=result;
   }
 }

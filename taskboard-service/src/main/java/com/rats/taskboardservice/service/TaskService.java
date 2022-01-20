@@ -6,8 +6,12 @@ import com.rats.taskboardservice.entity.enums.TaskStatus;
 import com.rats.taskboardservice.exception.RequestException;
 import com.rats.taskboardservice.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.net.http.HttpResponse;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,19 +23,24 @@ public class TaskService {
 
   private final TaskRepository taskRepository;
 
-  public TaskEntity save(TaskEntity task, UserEntity user) {
+  public ResponseEntity<?> save(TaskEntity task, UserEntity user) {
     task.setStatus(TaskStatus.ACTIVE);
     task.setCreationDate(LocalDateTime.now());
     task.setCustomer(user.getNickname());
-    return taskRepository.save(task);
+    taskRepository.save(task);
+    return new ResponseEntity<>(HttpStatus.CREATED);
   }
 
-  public void startTask(UserEntity user, Long id) {
+  public ResponseEntity<?> startTask(UserEntity user, Long id) {
     TaskEntity taskEntity = taskRepository.findById(id)
             .orElseThrow(() -> new RequestException("Не существует записи с ID = " + id));
-    taskEntity.setExecutor(user.getNickname());
-    taskEntity.setStatus(TaskStatus.IN_PROGRESS);
-    taskRepository.saveAndFlush(taskEntity);
+    if(taskEntity.getStatus().equals(TaskStatus.ACTIVE)) {
+      taskEntity.setExecutor(user.getNickname());
+      taskEntity.setStatus(TaskStatus.IN_PROGRESS);
+      taskRepository.saveAndFlush(taskEntity);
+      return new ResponseEntity<>(HttpStatus.OK);
+    }
+    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
   }
 
   public List<TaskEntity> getMyTasksOfUser(UserEntity user) {
@@ -53,10 +62,39 @@ public class TaskService {
 
   public void changeStatus(Long id,TaskStatus status) {
     TaskEntity taskEntity = taskRepository.findById(id)
-            .orElseThrow(() -> new RequestException("Не существует записи с ID = " + id));
+            .orElseThrow(() -> new RequestException("Task with id=" + id + " does not exist"));
     taskEntity.setStatus(status);
     taskEntity.setUpdateDate(LocalDateTime.now());
     taskRepository.saveAndFlush(taskEntity);
   }
+
+  public ResponseEntity<?> deactivateTask(Long id,String authUser) {
+    if(!taskRepository.existsById(id)) {
+      return new ResponseEntity<>("Task with this ID was not found",HttpStatus.NOT_FOUND);
+    }
+    TaskEntity taskEntity = taskRepository.getById(id);
+    if(!taskEntity.getCustomer().equals(authUser)) {
+      return new ResponseEntity<>("You are not the customer of this task",HttpStatus.BAD_REQUEST);
+    }
+    taskEntity.setStatus(TaskStatus.DEACTIVATED);
+    taskEntity.setUpdateDate(LocalDateTime.now());
+    taskRepository.saveAndFlush(taskEntity);
+    return new ResponseEntity<>(HttpStatus.OK);
+  }
+
+  public ResponseEntity<?> resolveTask(Long id,String authUser) {
+    if(!taskRepository.existsById(id)) {
+      return new ResponseEntity<>("Task with this ID was not found",HttpStatus.NOT_FOUND);
+    }
+    TaskEntity taskEntity = taskRepository.getById(id);
+    if(!taskEntity.getExecutor().equals(authUser)) {
+      return new ResponseEntity<>("You are not working on this task",HttpStatus.BAD_REQUEST);
+    }
+    taskEntity.setStatus(TaskStatus.RESOLVED);
+    taskEntity.setUpdateDate(LocalDateTime.now());
+    taskRepository.saveAndFlush(taskEntity);
+    return new ResponseEntity<>(HttpStatus.OK);
+  }
+
 
 }

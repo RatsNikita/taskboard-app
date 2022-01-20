@@ -14,8 +14,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
-@ControllerAdvice
-public class ExceptionHandlerController {
+@ControllerAdvice(basePackages = "com.rats.taskboardservice.controller")
+public class ControllerExceptionHandler {
 
   @ExceptionHandler
   public ModelAndView handlerRequestException(RequestException e, HttpServletRequest request) {

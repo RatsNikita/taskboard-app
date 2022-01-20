@@ -13,6 +13,7 @@ public class UserDto {
   @JsonAlias("user")
   @NotEmpty
   private String nickname;
+  @NotEmpty
   private String password;
   @NotEmpty
   @Email
