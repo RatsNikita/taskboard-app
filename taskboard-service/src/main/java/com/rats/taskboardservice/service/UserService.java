@@ -2,7 +2,7 @@ package com.rats.taskboardservice.service;
 
 import com.rats.taskboardservice.entity.SettingEntity;
 import com.rats.taskboardservice.entity.UserEntity;
-import com.rats.taskboardservice.entity.dto.AuthRequest;
+import com.rats.taskboardservice.api.dto.AuthRequest;
 import com.rats.taskboardservice.exception.RequestException;
 import com.rats.taskboardservice.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;

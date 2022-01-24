@@ -1,9 +1,9 @@
 package com.rats.taskboardservice.resource;
 
 
-import com.rats.taskboardservice.annotation.AccessCheck;
+import com.rats.taskboardservice.api.resource.UserResource;
 import com.rats.taskboardservice.entity.UserEntity;
-import com.rats.taskboardservice.entity.dto.UserDto;
+import com.rats.taskboardservice.api.dto.UserDto;
 import com.rats.taskboardservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import ma.glasnost.orika.MapperFacade;
@@ -18,50 +18,42 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/user")
-public class UserResource {
+public class UserResourceImpl implements UserResource {
 
   private final UserService userService;
 
   private final MapperFacade mapperFacade;
 
 
-  @AccessCheck
-  @GetMapping("/{id}")
-  public ResponseEntity<UserDto> getById(@PathVariable Long id, @CookieValue(name = "authUser", required = false) Cookie authCookie) {
+  @Override
+  public ResponseEntity<UserDto> getById(Long id, Cookie authCookie) {
     UserDto user = mapperFacade.map(userService.findById(id),UserDto.class);
     return new ResponseEntity<>(user,HttpStatus.OK);
   }
 
-  @AccessCheck
-  @GetMapping
-  public ResponseEntity<List<UserDto>> getAll(@CookieValue(name = "authUser", required = false) Cookie authCookie){
+  @Override
+  public ResponseEntity<List<UserDto>> getAll(Cookie authCookie){
     List<UserDto> users = mapperFacade.mapAsList(userService.findAll(),UserDto.class);
     return new ResponseEntity<>(users, HttpStatus.OK);
   }
 
-  @AccessCheck
-  @PostMapping
-  public ResponseEntity<?> addUser(@RequestBody UserDto user,
-                                   @CookieValue(name = "authUser", required = false) Cookie authCookie) {
+  @Override
+  public ResponseEntity<?> addUser(UserDto user, Cookie authCookie) {
     UserEntity userEntity = mapperFacade.map(user,UserEntity.class);
     userEntity.setCreationDate(OffsetDateTime.now());
     userService.save(userEntity);
     return new ResponseEntity<>(HttpStatus.CREATED);
   }
 
-  @AccessCheck
-  @PutMapping("/{id}")
-  public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody UserDto user,
-                                      @CookieValue(name = "authUser", required = false) Cookie authCookie) {
+  @Override
+  public ResponseEntity<?> updateUser(Long id, UserDto user, Cookie authCookie) {
     UserEntity userEntity = mapperFacade.map(user,UserEntity.class);
     userService.update(id,userEntity);
     return  new ResponseEntity<>(HttpStatus.OK);
   }
 
-  @AccessCheck
-  @DeleteMapping("/{id}")
-  public ResponseEntity<?> deleteUser(@PathVariable Long id,
-                                      @CookieValue(name = "authUser", required = false) Cookie authCookie) {
+  @Override
+  public ResponseEntity<?> deleteUser(Long id, Cookie authCookie) {
      userService.deleteById(id);
      return new ResponseEntity<>(HttpStatus.OK);
   }

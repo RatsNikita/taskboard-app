@@ -1,7 +1,7 @@
 package com.rats.taskboardservice.exception;
 
 
-import com.rats.taskboardservice.entity.dto.RequestResponse;
+import com.rats.taskboardservice.api.dto.RequestResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;

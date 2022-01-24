@@ -1,25 +1,23 @@
 package com.rats.taskboardservice.controller;
 
+import com.rats.taskboardservice.api.controller.TasksBoardController;
 import com.rats.taskboardservice.entity.TaskEntity;
 import com.rats.taskboardservice.entity.UserEntity;
-import com.rats.taskboardservice.entity.dto.TaskDto;
-import com.rats.taskboardservice.entity.enums.TaskStatus;
+import com.rats.taskboardservice.api.dto.TaskDto;
 import com.rats.taskboardservice.service.TaskService;
 import com.rats.taskboardservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.websocket.server.PathParam;
 import java.util.List;
 
 @Controller
+@RequestMapping("/task-board")
 @RequiredArgsConstructor
-@RequestMapping("/in-progress-tasks")
-public class InProgressTasksController {
+public class TasksBoardControllerImpl implements TasksBoardController {
 
   private final UserService userService;
 
@@ -27,13 +25,15 @@ public class InProgressTasksController {
 
   private final MapperFacade mapperFacade;
 
-  @RequestMapping("/resolve")
-  public String resolve(Model model, @PathParam("id") Long id, @CookieValue(name = "authUser") String authUser) {
-    taskService.changeStatus(id, TaskStatus.RESOLVED);
+  @Override
+  public String startTask(Model model, Long id, String authUser) {
     model.addAttribute("currentUser", authUser);
     UserEntity user = userService.findByNickname(authUser);
-    List<TaskEntity> tasksOfUser = taskService.getMyTasksOfUser(user);
+    taskService.startTask(user,id);
+    List<TaskEntity> tasksOfUser = taskService.getInProgressTasksOfUser(user);
     model.addAttribute("tasks", mapperFacade.mapAsList(tasksOfUser, TaskDto.class));
-    return "my-tasks";
+    return "in-progress-tasks";
   }
+
 }
+

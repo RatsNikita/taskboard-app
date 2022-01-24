@@ -1,17 +1,16 @@
 package com.rats.taskboardservice.controller;
 
 
+import com.rats.taskboardservice.api.controller.NewTaskController;
 import com.rats.taskboardservice.entity.TaskEntity;
 import com.rats.taskboardservice.entity.UserEntity;
-import com.rats.taskboardservice.entity.dto.TaskDto;
+import com.rats.taskboardservice.api.dto.TaskDto;
 import com.rats.taskboardservice.service.TaskService;
 import com.rats.taskboardservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.Cookie;
@@ -20,7 +19,7 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/new-task")
-public class NewTaskController {
+public class NewTaskControllerImpl implements NewTaskController {
 
   private final MapperFacade mapperFacade;
 
@@ -28,12 +27,11 @@ public class NewTaskController {
 
   private final UserService userService;
 
-  @PostMapping("/save")
-  public String saveTask(Model model, TaskDto task,
-                         @CookieValue(name = "authUser") Cookie authUser) {
+  @Override
+  public String saveTask(Model model, TaskDto task, Cookie authUser) {
     UserEntity user = userService.findByNickname(authUser.getValue());
     TaskEntity taskEntity =  mapperFacade.map(task, TaskEntity.class);
-    taskEntity.getUserEntityList().add(user);
+    taskEntity.setUser(user);
     taskService.save(taskEntity,user);
     model.addAttribute("currentUser", user.getNickname());
     List<TaskEntity> tasksOfUser = taskService.getMyTasksOfUser(user);

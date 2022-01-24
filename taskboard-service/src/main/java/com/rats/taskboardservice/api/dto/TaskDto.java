@@ -1,4 +1,4 @@
-package com.rats.taskboardservice.entity.dto;
+package com.rats.taskboardservice.api.dto;
 
 import com.rats.taskboardservice.entity.enums.TaskDifficulty;
 import com.rats.taskboardservice.entity.enums.TaskPriority;
@@ -8,8 +8,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 public class TaskDto {

@@ -1,4 +1,4 @@
-package com.rats.taskboardservice.entity.dto;
+package com.rats.taskboardservice.api.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

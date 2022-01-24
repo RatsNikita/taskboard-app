@@ -1,9 +1,10 @@
 package com.rats.taskboardservice.resource;
 
 
+import com.rats.taskboardservice.api.resource.TaskResource;
 import com.rats.taskboardservice.entity.TaskEntity;
 import com.rats.taskboardservice.entity.UserEntity;
-import com.rats.taskboardservice.entity.dto.TaskDto;
+import com.rats.taskboardservice.api.dto.TaskDto;
 import com.rats.taskboardservice.service.TaskService;
 import com.rats.taskboardservice.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
-public class TaskResource {
+public class TaskResourceImpl implements TaskResource {
 
   private final TaskService taskService;
 
@@ -25,7 +26,7 @@ public class TaskResource {
 
   private final MapperFacade mapperFacade;
 
-  @GetMapping("/task-board")
+  @Override
   public ResponseEntity<?> getTaskBoard() {
     List<TaskDto> tasks = mapperFacade.mapAsList(taskService.getAllTasks(),TaskDto.class);
     return !tasks.isEmpty()
@@ -33,8 +34,8 @@ public class TaskResource {
             : new ResponseEntity<>("Task board is empty",HttpStatus.NOT_FOUND);
   }
 
-  @GetMapping("/my-tasks")
-  public ResponseEntity<?> getMyTasks(@CookieValue("authUser") String authUser) {
+  @Override
+  public ResponseEntity<?> getMyTasks(String authUser) {
     UserEntity user = userService.findByNickname(authUser);
     List<TaskDto> tasksOfUser = mapperFacade.mapAsList(taskService.getMyTasksOfUser(user),TaskDto.class);
     return !tasksOfUser.isEmpty()
@@ -42,8 +43,8 @@ public class TaskResource {
             : new ResponseEntity<>("My tasks is empty",HttpStatus.NOT_FOUND);
   }
 
-  @GetMapping("/in-progress-tasks")
-  public ResponseEntity<?> getInProgressTasks(@CookieValue("authUser") String authUser) {
+  @Override
+  public ResponseEntity<?> getInProgressTasks(String authUser) {
     UserEntity user = userService.findByNickname(authUser);
     List<TaskDto> inProgressTasksOfUser = mapperFacade.mapAsList(taskService.getInProgressTasksOfUser(user),TaskDto.class);
     return !inProgressTasksOfUser.isEmpty()
@@ -51,25 +52,25 @@ public class TaskResource {
             : new ResponseEntity<>("In progress tasks is empty", HttpStatus.NOT_FOUND);
   }
 
-  @PostMapping("/new-task/save")
-  public ResponseEntity<?> createNewTask(@CookieValue("authUser") String authUser,@RequestBody TaskDto taskDto) {
+  @Override
+  public ResponseEntity<?> createNewTask( String authUser, TaskDto taskDto) {
     UserEntity user = userService.findByNickname(authUser);
     TaskEntity task = mapperFacade.map(taskDto,TaskEntity.class);
     return taskService.save(task,user);
   }
 
-  @PutMapping("/in-progress-tasks/resolve/{id}")
-  public ResponseEntity<?> resolveTask(@PathVariable Long id,@CookieValue("authUser") String authUser) {
+  @Override
+  public ResponseEntity<?> resolveTask(Long id, String authUser) {
     return taskService.resolveTask(id,authUser);
   }
 
-  @PutMapping("/my-tasks/delete/{id}")
-  public ResponseEntity<?> deleteTask(@PathVariable Long id,@CookieValue("authUser") String authUser) {
+  @Override
+  public ResponseEntity<?> deleteTask(Long id, String authUser) {
     return taskService.deactivateTask(id,authUser);
   }
 
-  @PutMapping("/task-board/start/{id}")
-  public ResponseEntity<?> startTask(@PathVariable Long id, @CookieValue("authUser") String authUser) {
+  @Override
+  public ResponseEntity<?> startTask(Long id, String authUser) {
     UserEntity user = userService.findByNickname(authUser);
     return taskService.startTask(user,id);
   }

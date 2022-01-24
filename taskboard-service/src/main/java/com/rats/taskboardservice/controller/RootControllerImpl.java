@@ -1,68 +1,62 @@
 package com.rats.taskboardservice.controller;
 
+import com.rats.taskboardservice.api.controller.RootController;
 import com.rats.taskboardservice.entity.TaskEntity;
 import com.rats.taskboardservice.entity.UserEntity;
-import com.rats.taskboardservice.entity.dto.TaskDto;
-import com.rats.taskboardservice.entity.enums.TaskStatus;
-import com.rats.taskboardservice.repository.TaskRepository;
+import com.rats.taskboardservice.api.dto.TaskDto;
 import com.rats.taskboardservice.service.TaskService;
 import com.rats.taskboardservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import ma.glasnost.orika.MapperFacade;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
-public class RootController {
+public class RootControllerImpl implements RootController {
 
   private final TaskService taskService;
-  private final UserService userService;
-  private final MapperFacade mapperFacade;
-  private final TaskRepository taskRepository;
 
-  @GetMapping({"", "/"})
+  private final UserService userService;
+
+  private final MapperFacade mapperFacade;
+
+  @Override
   public String index() {
     return "login";
   }
 
-  @GetMapping("/login")
-  public String login(Model model, @CookieValue("authUser") String authUser) {
+  @Override
+  public String login(Model model, String authUser) {
     model.addAttribute("currentUser",authUser);
     return "login";
   }
 
-  @GetMapping("/logout")
-  public String logout(@CookieValue("authUser") Cookie authUser, HttpServletResponse response) {
+  @Override
+  public String logout(Cookie authUser, HttpServletResponse response) {
     authUser.setMaxAge(0);
     response.addCookie(authUser);
     return "login";
   }
 
-  @GetMapping("/main")
-  public String mainPage(Model model,@CookieValue("authUser") String authUser) {
+  @Override
+  public String mainPage(Model model, String authUser) {
     model.addAttribute("currentUser",authUser);
     return "main";
   }
 
-  @GetMapping("/new-task")
-  public String newTask(Model model,@CookieValue("authUser") String authUser) {
+  @Override
+  public String newTask(Model model, String authUser) {
     model.addAttribute("currentUser",authUser);
     return "new-task";
   }
 
-  @GetMapping("/my-tasks")
-  public String myTasks(Model model,@CookieValue("authUser") String authUser) {
+  @Override
+  public String myTasks(Model model, String authUser) {
     UserEntity user = userService.findByNickname(authUser);
     model.addAttribute("currentUser", user.getNickname());
     List<TaskEntity> tasksOfUser = taskService.getMyTasksOfUser(user);
@@ -70,8 +64,8 @@ public class RootController {
     return "my-tasks";
   }
 
-  @GetMapping("/task-board")
-  public String tasksBoard(Model model,@CookieValue("authUser") String authUser) {
+  @Override
+  public String tasksBoard(Model model, String authUser) {
     UserEntity user = userService.findByNickname(authUser);
     model.addAttribute("currentUser", user.getNickname());
     List<TaskEntity> tasks = taskService.getAllTasks();
@@ -79,8 +73,8 @@ public class RootController {
     return "task-board";
   }
 
-  @GetMapping("/in-progress-tasks")
-  public String inProgressTasks(Model model,@CookieValue("authUser") String authUser) {
+  @Override
+  public String inProgressTasks(Model model, String authUser) {
     UserEntity user = userService.findByNickname(authUser);
     model.addAttribute("currentUser", user.getNickname());
     List<TaskEntity> tasks = taskService.getInProgressTasksOfUser(user);
@@ -88,8 +82,8 @@ public class RootController {
     return "in-progress-tasks";
   }
 
-  @GetMapping("/setting")
-  public String setting(Model model,@CookieValue("authUser") String authUser) {
+  @Override
+  public String setting(Model model, String authUser) {
     model.addAttribute("currentUser",authUser);
     return "setting";
   }
