@@ -1,0 +1,18 @@
+app:
+  lang: en
+  county: US
+
+spring:
+  liquibase:
+    enabled: false
+  datasource:
+    url: jdbc:h2:mem:test
+
+  jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        format_sql: true
+    hibernate:
+      ddl-auto: create-drop
