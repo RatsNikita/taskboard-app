@@ -17,7 +17,6 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/user")
 public class UserResourceImpl implements UserResource {
 
   private final UserService userService;

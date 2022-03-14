@@ -11,7 +11,7 @@
     <groupId>com.example</groupId>
     <artifactId>TaskBoard</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Scope</name>
+    <name>TaskBoard</name>
     <description>TaskBoard</description>
     <properties>
         <java.version>11</java.version>
